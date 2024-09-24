@@ -24,17 +24,19 @@ class MindfulnessExerciseModel {
   // We don't use camel casing for json data (pascal casing)
   factory MindfulnessExerciseModel.fromJson(Map<String, dynamic> json) {
     return MindfulnessExerciseModel(
-        category: json['category'],
-        name: json["name"],
-        description: json["description"],
-        instructions:List<String>.from(json["instructions"]) , // to convert this json["instructions"] to a list we use 'List<String>.from(data)'
-        duration: json["duration"],
-        instructionUrl: json["instruction_url"],
-        imagePath: json["image_path"]);
+      category: json['category'],
+      name: json["name"],
+      description: json["description"],
+      instructions: List<String>.from(json[
+          "instructions"]), // to convert this json["instructions"] to a list we use 'List<String>.from(data)'
+      duration: json["duration"],
+      instructionUrl: json["instruction_url"],
+      imagePath: json["image_path"],
+    );
   }
 
   // Method to convert MindfulnessExerciseModel to json data
-  Map<String, dynamic> toJson(){
+  Map<String, dynamic> toJson() {
     return {
       "category": category,
       "name": name,
