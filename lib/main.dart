@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meditator_mobile_app/pages/main_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,9 +11,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "Meditator",
-      home: Scaffold(appBar: AppBar(title: const Text("Main"),),),
-    );
+        debugShowCheckedModeBanner: false,
+        title: "Meditator",
+        home: MainPage());
   }
 }
 
@@ -33,4 +34,3 @@ class MyApp extends StatelessWidget {
 // ----------------
 // build_runner: ^2.4.12
 // hive_generator: ^2.0.1
-
