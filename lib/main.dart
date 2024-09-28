@@ -34,3 +34,5 @@ class MyApp extends StatelessWidget {
 // ----------------
 // build_runner: ^2.4.12
 // hive_generator: ^2.0.1
+
+// for color palettes use https://colorhunt.co/

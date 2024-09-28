@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:meditator_mobile_app/pages/main_screens/create_custom_exercise_page.dart';
 import 'package:meditator_mobile_app/pages/main_screens/custom_exercises_page.dart';
 import 'package:meditator_mobile_app/pages/main_screens/home_page.dart';
@@ -46,7 +47,7 @@ class _MainPageState extends State<MainPage> {
           onTap: _onItemTapped,
           currentIndex: _selectedIndex,
           items: [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+            BottomNavigationBarItem(icon: SvgPicture.asset("assets/icons/house.svg"), label: "Home"),
             BottomNavigationBarItem(icon: Icon(Icons.home), label: "Mindful"),
             BottomNavigationBarItem(icon: Icon(Icons.home), label: "Create"),
             BottomNavigationBarItem(icon: Icon(Icons.home), label: "Custom"),
