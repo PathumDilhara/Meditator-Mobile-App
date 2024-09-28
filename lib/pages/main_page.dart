@@ -5,6 +5,7 @@ import 'package:meditator_mobile_app/pages/main_screens/custom_exercises_page.da
 import 'package:meditator_mobile_app/pages/main_screens/home_page.dart';
 import 'package:meditator_mobile_app/pages/main_screens/mindful_exercise_page.dart';
 import 'package:meditator_mobile_app/pages/main_screens/profile_page.dart';
+import 'package:meditator_mobile_app/utils/colors.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -34,7 +35,6 @@ class _MainPageState extends State<MainPage> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
-      print(index);
     });
   }
 
@@ -47,14 +47,74 @@ class _MainPageState extends State<MainPage> {
           onTap: _onItemTapped,
           currentIndex: _selectedIndex,
           items: [
-            BottomNavigationBarItem(icon: SvgPicture.asset("assets/icons/house.svg"), label: "Home"),
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: "Mindful"),
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: "Create"),
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: "Custom"),
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: "Profile"),
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset(
+                "assets/icons/house.svg",
+                colorFilter: ColorFilter.mode(
+                  _selectedIndex == 0
+                      ? AppColors.primaryPurple
+                      : AppColors.primaryGrey,
+                  BlendMode.srcIn,
+                ),
+                semanticsLabel: "home svg",
+              ),
+              label: "Home",
+            ),
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset(
+                "assets/icons/brain.svg",
+                colorFilter: ColorFilter.mode(
+                  _selectedIndex == 1
+                      ? AppColors.primaryPurple
+                      : AppColors.primaryGrey,
+                  BlendMode.srcIn,
+                ),
+                semanticsLabel: "brain svg",
+              ),
+              label: "Mindful",
+            ),
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset(
+                "assets/icons/circle-plus.svg",
+                colorFilter: ColorFilter.mode(
+                  _selectedIndex == 2
+                      ? AppColors.primaryPurple
+                      : AppColors.primaryGrey,
+                  BlendMode.srcIn,
+                ),
+                semanticsLabel: "circle-plus svg",
+              ),
+              label: "Create",
+            ),
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset(
+                "assets/icons/file-plus-2.svg",
+                colorFilter: ColorFilter.mode(
+                  _selectedIndex == 3
+                      ? AppColors.primaryPurple
+                      : AppColors.primaryGrey,
+                  BlendMode.srcIn,
+                ),
+                semanticsLabel: "file-plus-2 svg",
+              ),
+              label: "Custom",
+            ),
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset(
+                "assets/icons/user-cog.svg",
+                colorFilter: ColorFilter.mode(
+                  _selectedIndex == 4
+                      ? AppColors.primaryPurple
+                      : AppColors.primaryGrey,
+                  BlendMode.srcIn,
+                ),
+                semanticsLabel: "user-cog svg",
+              ),
+              label: "Profile",
+            ),
           ],
-          selectedItemColor: Colors.red,
-          unselectedItemColor: Colors.grey,
+          selectedItemColor: AppColors.primaryPurple,
+          unselectedItemColor: AppColors.primaryGrey,
         ),
       ),
       body: _pages[_selectedIndex],
