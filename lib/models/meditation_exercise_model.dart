@@ -1,4 +1,4 @@
-class MeditationExerciseModels {
+class MeditationExerciseModel {
   final String category;
   final String name;
   final String description;
@@ -6,7 +6,7 @@ class MeditationExerciseModels {
   final String audioUrl;
   final String videoUrl;
 
-  MeditationExerciseModels({
+  MeditationExerciseModel({
     required this.category,
     required this.name,
     required this.description,
@@ -18,8 +18,8 @@ class MeditationExerciseModels {
   // Serialization and deserialization methods
 
   // Method to convert the json data into a MeditationExerciseModels
-  factory MeditationExerciseModels.fromJson(Map<String, dynamic> json) {
-    return MeditationExerciseModels(
+  factory MeditationExerciseModel.fromJson(Map<String, dynamic> json) {
+    return MeditationExerciseModel(
       category: json["category"],
       name: json["name"],
       description: json["description"],
