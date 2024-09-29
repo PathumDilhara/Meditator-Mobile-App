@@ -66,3 +66,4 @@ class MyApp extends StatelessWidget {
 // hive_generator: ^2.0.1
 
 // for color palettes use https://colorhunt.co/
+// for images use https://undraw.co/search

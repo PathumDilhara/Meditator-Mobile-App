@@ -24,8 +24,9 @@ class _MainPageState extends State<MainPage> {
 
   // List of pages for bottom navigation bar, consider the order
   static const List<Widget> _pages = [
-    HomePage(),
     MindfulExercisePage(),
+    HomePage(),
+
     CreateCustomExercisePage(),
     CustomExercisesPage(),
     ProfilePage(),

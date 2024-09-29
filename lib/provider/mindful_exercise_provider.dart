@@ -174,4 +174,24 @@ class MindfulnessExerciseProvider extends ChangeNotifier {
 
     mindfulnessExercise = List.from(_allMindfulnessExercises);
   }
+
+  // // Method to fetch all mindfulness exercises
+  // List<MindfulnessExerciseModel> getAllMindfulnessExercises(){
+  //   return mindfulnessExercise;
+  // }
+
+  // Method to search by title
+  void searchMindfulnessExercise(String query) {
+    if (query.isEmpty) {
+      mindfulnessExercise = List.from(_allMindfulnessExercises);
+    } else {
+      mindfulnessExercise = _allMindfulnessExercises
+          .where((exercise) =>
+              exercise.name.toLowerCase().contains(query.toLowerCase()))
+          .toList();
+      // where means filtering, if passing query containing name of models then
+      // add those models to list, may be one or more hence convert into a list
+    }
+    notifyListeners();
+  }
 }
