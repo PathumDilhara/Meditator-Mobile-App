@@ -12,6 +12,7 @@ import 'package:provider/provider.dart';
 class FilterProvider extends ChangeNotifier {
   List<dynamic> _allData = [];
   List<dynamic> _filteredData = [];
+  String _selectedCategory = "All";
 
   // Method to get all data from other providers
   Future<void> getData(BuildContext context) async {
@@ -48,8 +49,35 @@ class FilterProvider extends ChangeNotifier {
     // and vice versa, since both variables point to the same underlying data.
 
     _filteredData = _allData;
+    notifyListeners();
   }
 
   // getter for filtered data
   List<dynamic> get filteredData => _filteredData;
+
+  // Method to filter the data
+  void filterDataMethod(String category){
+    _selectedCategory = category;
+    if(category == "All"){
+      _filteredData = _allData;
+    } else if(category == "Mindfulness"){
+      // let assign only MindfulnessExerciseModel type data in _allData list
+      _filteredData = _allData.whereType<MindfulnessExerciseModel>().toList();
+    } else if(category == "Meditation"){
+      _filteredData = _allData.whereType<MeditationExerciseModel>().toList();
+    } else if(category == "Sleep Stories"){
+      _filteredData = _allData.whereType<SleepExerciseModel>().toList();
+    }
+
+    notifyListeners();
+    // through filter chips this function will call, then according to there passing
+    // String ("All", Mindfulness, ...) we change the data contains of the _filteredData
+    // list and then again notify listeners, here listener(Consumer) is the home page
+    // main SingleChileScrollView.
+  }
+
+  // Method to return selected category
+  String getSelectedCategory(){
+    return _selectedCategory;
+  }
 }

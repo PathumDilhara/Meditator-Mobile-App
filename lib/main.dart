@@ -1,9 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:meditator_mobile_app/provider/filter_provider.dart';
+import 'package:meditator_mobile_app/provider/meditation_provider.dart';
+import 'package:meditator_mobile_app/provider/mindful_exercise_provider.dart';
+import 'package:meditator_mobile_app/provider/sleep_exercise_provider.dart';
 import 'package:meditator_mobile_app/router/router.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    // Since we have 4 providers we have to first initialised them by wrapping
+    // MyApp() by multi provider
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => MindfulnessExerciseProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => MeditationExerciseProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => SleepExerciseProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => FilterProvider(),
+        ),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
