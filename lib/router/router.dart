@@ -3,9 +3,11 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:meditator_mobile_app/models/functions_page_data_model.dart';
 import 'package:meditator_mobile_app/models/mindfulness_exercise_model.dart';
 import 'package:meditator_mobile_app/pages/main_page.dart';
 import 'package:meditator_mobile_app/pages/sub_pages/error_page.dart';
+import 'package:meditator_mobile_app/pages/sub_pages/functions_page.dart';
 import 'package:meditator_mobile_app/pages/sub_pages/mindfulness_exercise_details_page.dart';
 
 class AppRouter {
@@ -51,6 +53,15 @@ class AppRouter {
           //     mindfulnessExerciseModel: mindfulnessExercise);
         },
       ),
+      GoRoute(
+        path: "/functions",
+        name: "functions page",
+        builder: (context, state) {
+          final FunctionsPageDataModel functionsPageDataModel =
+              state.extra as FunctionsPageDataModel;
+          return FunctionsPage(functionsPageDataModel: functionsPageDataModel);
+        },
+      )
     ],
   );
 }

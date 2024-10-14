@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:go_router/go_router.dart';
+import 'package:meditator_mobile_app/models/functions_page_data_model.dart';
 import 'package:meditator_mobile_app/models/meditation_exercise_model.dart';
 import 'package:meditator_mobile_app/models/mindfulness_exercise_model.dart';
 import 'package:meditator_mobile_app/provider/filter_provider.dart';
@@ -9,6 +11,146 @@ import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
+
+  // handle mindfulness exercises pressed
+  void handleMindfulnessExercisePressed() {
+    print("###################### mindfulness");
+  }
+
+  // handle meditation exercises pressed
+  void handleMeditationExercisePressed(
+    BuildContext context, // to get bottom sheet
+    final name,
+    final description,
+    final duration,
+    final category,
+    final videoUrl,
+  ) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return SizedBox(
+          width: double.infinity,
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(30.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    name,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.primaryPurple,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    category,
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.primaryGrey,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    description,
+                    style: const TextStyle(
+                      fontSize: 15,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    "$duration min",
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.primaryGreen,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          GoRouter.of(context).push(
+                            "/functions",
+                            extra: FunctionsPageDataModel(
+                              title: name,
+                              duration: duration,
+                              category: category,
+                              description: description,
+                              url: videoUrl,
+                            ),
+                          );
+                          Navigator.pop(context);
+                        },
+                        style: const ButtonStyle(
+                          backgroundColor: WidgetStatePropertyAll(
+                            AppColors.primaryGreen,
+                          ),
+                          // shape: WidgetStatePropertyAll(
+                          //   RoundedRectangleBorder(
+                          //     borderRadius: BorderRadius.circular(100),
+                          //   ),
+                          // ),
+                          shadowColor:
+                              WidgetStatePropertyAll(Colors.transparent),
+                        ),
+                        child: const Text(
+                          "Start",
+                          style: TextStyle(color: AppColors.primaryBlack),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        style: const ButtonStyle(
+                          backgroundColor: WidgetStatePropertyAll(
+                            AppColors.primaryGreen,
+                          ),
+                          // shape: WidgetStatePropertyAll(
+                          //   RoundedRectangleBorder(
+                          //     borderRadius: BorderRadius.circular(100),
+                          //   ),
+                          // ),
+                          shadowColor:
+                              WidgetStatePropertyAll(Colors.transparent),
+                        ),
+                        child: const Text(
+                          "Close",
+                          style: TextStyle(color: AppColors.primaryBlack),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  // handle sleep exercises pressed
+  void handleSleepExercisePressed() {
+    print("###################### sleep");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -168,20 +310,20 @@ class HomePage extends StatelessWidget {
                                     onSelected: (bool value) {
                                       filterData.filterDataMethod("Meditation");
                                     },
-                                      // Say to widget that it is selected or not
-                                  selected:
-                                      filterData.getSelectedCategory() ==
-                                      "Meditation",
-                            selectedColor: AppColors.primaryPurple,
-                            showCheckmark: false, // default tick there
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              side: BorderSide(
-                                color: AppColors.primaryPurple
-                                    .withOpacity(0.5),
-                                width: 2,
-                              ),
-                            ),
+                                    // Say to widget that it is selected or not
+                                    selected:
+                                        filterData.getSelectedCategory() ==
+                                            "Meditation",
+                                    selectedColor: AppColors.primaryPurple,
+                                    showCheckmark: false, // default tick there
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      side: BorderSide(
+                                        color: AppColors.primaryPurple
+                                            .withOpacity(0.5),
+                                        width: 2,
+                                      ),
+                                    ),
                                   ),
                                   const SizedBox(
                                     width: 10,
@@ -201,20 +343,20 @@ class HomePage extends StatelessWidget {
                                       filterData
                                           .filterDataMethod("Sleep Stories");
                                     },
-                                      // Say to widget that it is selected or not
-                                  selected:
-                                      filterData.getSelectedCategory() ==
-                                      "Sleep Stories",
-                            selectedColor: AppColors.primaryPurple,
-                            showCheckmark: false, // default tick there
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              side: BorderSide(
-                                color: AppColors.primaryPurple
-                                    .withOpacity(0.5),
-                                width: 2,
-                              ),
-                            ),
+                                    // Say to widget that it is selected or not
+                                    selected:
+                                        filterData.getSelectedCategory() ==
+                                            "Sleep Stories",
+                                    selectedColor: AppColors.primaryPurple,
+                                    showCheckmark: false, // default tick there
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      side: BorderSide(
+                                        color: AppColors.primaryPurple
+                                            .withOpacity(0.5),
+                                        width: 2,
+                                      ),
+                                    ),
                                   ),
                                 ],
                               ),
@@ -231,7 +373,22 @@ class HomePage extends StatelessWidget {
                             mainAxisSpacing: 10,
                             children: completedData.map((data) {
                               return GestureDetector(
-                                onTap: () {},
+                                onTap: () {
+                                  if (data is MindfulnessExerciseModel) {
+                                    handleMindfulnessExercisePressed();
+                                  } else if (data is MeditationExerciseModel) {
+                                    handleMeditationExercisePressed(
+                                      context,
+                                      data.name,
+                                      data.description,
+                                      data.duration,
+                                      data.category,
+                                      data.videoUrl,
+                                    );
+                                  } else {
+                                    handleSleepExercisePressed();
+                                  }
+                                },
                                 child: Container(
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
