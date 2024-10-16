@@ -9,6 +9,7 @@ import 'package:meditator_mobile_app/pages/main_page.dart';
 import 'package:meditator_mobile_app/pages/sub_pages/error_page.dart';
 import 'package:meditator_mobile_app/pages/sub_pages/functions_page.dart';
 import 'package:meditator_mobile_app/pages/sub_pages/mindfulness_exercise_details_page.dart';
+import 'package:meditator_mobile_app/pages/sub_pages/single_mindfulness_exercise_page.dart';
 
 class AppRouter {
   final router = GoRouter(
@@ -61,7 +62,18 @@ class AppRouter {
               state.extra as FunctionsPageDataModel;
           return FunctionsPage(functionsPageDataModel: functionsPageDataModel);
         },
-      )
+      ),
+      GoRoute(
+        name: "mindfulnessExerciseTimer",
+        path: "/mindfulnessExerciseTimer",
+        builder: (context, state) {
+          // Since we cannot pass dart obj through this convert to json again
+          // convert json to dart obj to pass into MindfulnessExerciseTimerPage
+          final mindfulnessExerciseJson = state.uri.queryParameters["mindfulnessExercise"];
+          final mindfulnessExerciseModel = MindfulnessExerciseModel.fromJson(jsonDecode(mindfulnessExerciseJson!));
+          return SingleMindfulnessExercisePage(mindfulnessExerciseModel: mindfulnessExerciseModel);
+        },
+      ),
     ],
   );
 }

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:go_router/go_router.dart';
@@ -13,8 +15,17 @@ class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   // handle mindfulness exercises pressed
-  void handleMindfulnessExercisePressed() {
-    print("###################### mindfulness");
+  void handleMindfulnessExercisePressed(
+    BuildContext context,
+    MindfulnessExerciseModel mindfulnessExercise,
+  ) {
+    // only work with pushedNamed
+    GoRouter.of(context).pushNamed(
+      "mindfulnessExerciseTimer",
+      queryParameters: {
+        "mindfulnessExercise": jsonEncode(mindfulnessExercise.toJson()),
+      },
+    );
   }
 
   // handle meditation exercises pressed
@@ -170,7 +181,7 @@ class HomePage extends StatelessWidget {
             if (snapshot.hasError) {
               return Center(
                 child: Text(
-                  "Eror Loading Data",
+                  "Error Loading Data",
                   style: AppTextStyles.titleStyle
                       .copyWith(color: AppColors.primaryGrey),
                 ),
@@ -375,7 +386,7 @@ class HomePage extends StatelessWidget {
                               return GestureDetector(
                                 onTap: () {
                                   if (data is MindfulnessExerciseModel) {
-                                    handleMindfulnessExercisePressed();
+                                    handleMindfulnessExercisePressed(context, data);
                                   } else if (data is MeditationExerciseModel) {
                                     handleMeditationExercisePressed(
                                       context,
