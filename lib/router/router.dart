@@ -5,11 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:meditator_mobile_app/models/functions_page_data_model.dart';
 import 'package:meditator_mobile_app/models/mindfulness_exercise_model.dart';
+import 'package:meditator_mobile_app/models/sleep_exercise_model.dart';
 import 'package:meditator_mobile_app/pages/main_page.dart';
 import 'package:meditator_mobile_app/pages/sub_pages/error_page.dart';
 import 'package:meditator_mobile_app/pages/sub_pages/functions_page.dart';
 import 'package:meditator_mobile_app/pages/sub_pages/mindfulness_exercise_details_page.dart';
 import 'package:meditator_mobile_app/pages/sub_pages/single_mindfulness_exercise_page.dart';
+import 'package:meditator_mobile_app/pages/sub_pages/sleep_exercise_timer_page.dart';
 
 class AppRouter {
   final router = GoRouter(
@@ -72,6 +74,17 @@ class AppRouter {
           final mindfulnessExerciseJson = state.uri.queryParameters["mindfulnessExercise"];
           final mindfulnessExerciseModel = MindfulnessExerciseModel.fromJson(jsonDecode(mindfulnessExerciseJson!));
           return SingleMindfulnessExercisePage(mindfulnessExerciseModel: mindfulnessExerciseModel);
+        },
+      ),
+      GoRoute(
+        name: "sleepExercisesTimer",
+        path: "/sleepExercisesTimer",
+        builder: (context, state) {
+          // Since we cannot pass dart obj through this convert to json again
+          // convert json to dart obj to pass into MindfulnessExerciseTimerPage
+          final sleepExerciseJson = state.uri.queryParameters["sleepExercise"];
+          final sleepExerciseModel = SleepExerciseModel.fromJson(jsonDecode(sleepExerciseJson!));
+          return SleepExerciseTimerPage(sleepExerciseModel: sleepExerciseModel);
         },
       ),
     ],

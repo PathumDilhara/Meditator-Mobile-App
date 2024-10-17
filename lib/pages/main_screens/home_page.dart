@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:meditator_mobile_app/models/functions_page_data_model.dart';
 import 'package:meditator_mobile_app/models/meditation_exercise_model.dart';
 import 'package:meditator_mobile_app/models/mindfulness_exercise_model.dart';
+import 'package:meditator_mobile_app/models/sleep_exercise_model.dart';
 import 'package:meditator_mobile_app/provider/filter_provider.dart';
 import 'package:meditator_mobile_app/utils/colors.dart';
 import 'package:meditator_mobile_app/utils/text_styles.dart';
@@ -159,8 +160,15 @@ class HomePage extends StatelessWidget {
   }
 
   // handle sleep exercises pressed
-  void handleSleepExercisePressed() {
-    print("###################### sleep");
+  void handleSleepExercisePressed(
+      BuildContext context, SleepExerciseModel sleepExercise) {
+    GoRouter.of(context).pushNamed(
+      "sleepExercisesTimer",
+      // let pass the data to page when directing under the key "sleepExercise"
+      queryParameters: {
+        "sleepExercise": jsonEncode(sleepExercise.toJson()),
+      },
+    );
   }
 
   @override
@@ -386,7 +394,8 @@ class HomePage extends StatelessWidget {
                               return GestureDetector(
                                 onTap: () {
                                   if (data is MindfulnessExerciseModel) {
-                                    handleMindfulnessExercisePressed(context, data);
+                                    handleMindfulnessExercisePressed(
+                                        context, data);
                                   } else if (data is MeditationExerciseModel) {
                                     handleMeditationExercisePressed(
                                       context,
@@ -397,7 +406,7 @@ class HomePage extends StatelessWidget {
                                       data.videoUrl,
                                     );
                                   } else {
-                                    handleSleepExercisePressed();
+                                    handleSleepExercisePressed(context, data);
                                   }
                                 },
                                 child: Container(
