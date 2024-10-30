@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:meditator_mobile_app/models/meditation_exercise_model.dart';
+import 'package:meditator_mobile_app/provider/custom_provider.dart';
 import 'package:meditator_mobile_app/utils/colors.dart';
 import 'package:meditator_mobile_app/widgets/reusable/custom_text_input_field.dart';
+import 'package:provider/provider.dart';
 
 class MeditationForm extends StatefulWidget {
   const MeditationForm({super.key});
@@ -24,6 +27,7 @@ class _MeditationFormState extends State<MeditationForm> {
       child: Column(
         children: [
           Form(
+            key: _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -155,8 +159,33 @@ class _MeditationFormState extends State<MeditationForm> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     ElevatedButton(
-                      // TODO : save data
-                      onPressed: () {},
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          _formKey.currentState!.save();
+
+                          // Create a new meditation from the user
+                          final meditation = MeditationExerciseModel(
+                            category: _category,
+                            name: _name,
+                            description: _description,
+                            duration: _duration,
+                            audioUrl: _audioUrl,
+                            videoUrl: _videoUrl,
+                          );
+
+                          _formKey.currentState!.reset();
+                          _category = "";
+                          _name = "";
+                          _description = "";
+                          _duration = 0;
+                          _audioUrl = "";
+                          _videoUrl = "";
+
+                          // Add the meditation through the provider then provider update state and save to storage
+                          Provider.of<CustomProvider>(context, listen: false)
+                              .addMeditation(meditation, context);
+                        }
+                      },
                       style: const ButtonStyle(
                         backgroundColor:
                             WidgetStatePropertyAll(AppColors.primaryGreen),

@@ -5,6 +5,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:meditator_mobile_app/models/meditation_exercise_model.dart';
 import 'package:meditator_mobile_app/models/mindfulness_exercise_model.dart';
 import 'package:meditator_mobile_app/models/sleep_exercise_model.dart';
+import 'package:meditator_mobile_app/provider/custom_provider.dart';
 
 // Providers
 import 'package:meditator_mobile_app/provider/filter_provider.dart';
@@ -42,6 +43,9 @@ void main() async {
         ),
         ChangeNotifierProvider(
           create: (context) => FilterProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => CustomProvider(),
         ),
       ],
       child: const MyApp(),
