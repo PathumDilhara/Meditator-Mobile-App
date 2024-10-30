@@ -22,6 +22,10 @@ void main() async {
   Hive.registerAdapter(MindfulnessExerciseModelAdapter());
   Hive.registerAdapter(SleepExerciseModelAdapter());
 
+  await Hive.openBox("meditation_data_box");
+  await Hive.openBox("mindfulness_data_box");
+  await Hive.openBox("sleep_data_box");
+
   runApp(
     // Since we have 4 providers we have to first initialised them by wrapping
     // MyApp() by multi provider
