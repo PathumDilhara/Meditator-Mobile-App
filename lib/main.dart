@@ -1,13 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:meditator_mobile_app/models/meditation_exercise_model.dart';
+import 'package:meditator_mobile_app/models/mindfulness_exercise_model.dart';
+import 'package:meditator_mobile_app/models/sleep_exercise_model.dart';
+
+// Providers
 import 'package:meditator_mobile_app/provider/filter_provider.dart';
 import 'package:meditator_mobile_app/provider/meditation_provider.dart';
 import 'package:meditator_mobile_app/provider/mindful_exercise_provider.dart';
 import 'package:meditator_mobile_app/provider/sleep_exercise_provider.dart';
+
 import 'package:meditator_mobile_app/router/router.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
+  // Hive registering
+  await Hive.initFlutter();
+  Hive.registerAdapter(MeditationExerciseModelAdapter());
+  Hive.registerAdapter(MindfulnessExerciseModelAdapter());
+  Hive.registerAdapter(SleepExerciseModelAdapter());
+
   runApp(
     // Since we have 4 providers we have to first initialised them by wrapping
     // MyApp() by multi provider
