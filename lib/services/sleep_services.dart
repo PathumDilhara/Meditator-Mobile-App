@@ -38,4 +38,47 @@ class SleepExerciseServices {
       );
     }
   }
+
+// Method to get all the sleep exercises
+  List<SleepExerciseModel> getStoredSleepExercises() {
+    try {
+      final allSleepExercises = sleepBox.get("sleep_data");
+      if(allSleepExercises != null && allSleepExercises is List<dynamic>){
+        return allSleepExercises.cast<SleepExerciseModel>().toList();
+      } else {
+        return [];
+      }
+    } catch(err){
+      print("Get service error : $err");
+      return [];
+    }
+  }
+
+// Method to delete a sleep exercise
+  Future<void> deleteSleepExercise(SleepExerciseModel sleepExercise, BuildContext context)async{
+    try{
+      final allSleepExercises = sleepBox.get("sleep_data");
+      allSleepExercises.remove(sleepExercise);
+      
+      await sleepBox.put("sleep_data", allSleepExercises);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Sleep exercise deleted"),
+            duration: Duration(seconds: 3),
+            backgroundColor: AppColors.primaryBlack,
+          ),
+      );
+    }catch(err){
+      print("delete service error : $err");
+
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Error delete sleep exercise"),
+            duration: Duration(seconds: 3),
+            backgroundColor: Colors.redAccent,
+          ),
+      );
+    }
+  }
 }
