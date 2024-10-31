@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:meditator_mobile_app/models/sleep_exercise_model.dart';
+import 'package:meditator_mobile_app/provider/custom_provider.dart';
 import 'package:meditator_mobile_app/utils/colors.dart';
 import 'package:meditator_mobile_app/widgets/reusable/custom_text_input_field.dart';
+import 'package:provider/provider.dart';
 
 class SleepExerciseForm extends StatefulWidget {
   const SleepExerciseForm({super.key});
@@ -24,6 +27,7 @@ class _SleepExerciseFormState extends State<SleepExerciseForm> {
       child: Column(
         children: [
           Form(
+            key: _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -37,7 +41,7 @@ class _SleepExerciseFormState extends State<SleepExerciseForm> {
                 const SizedBox(
                   height: 30,
                 ),
-      
+
                 // Category input field
                 CustomTextInputField(
                   label: "Category",
@@ -56,7 +60,7 @@ class _SleepExerciseFormState extends State<SleepExerciseForm> {
                 const SizedBox(
                   height: 10,
                 ),
-      
+
                 // Name input field
                 CustomTextInputField(
                   label: "Name",
@@ -75,7 +79,7 @@ class _SleepExerciseFormState extends State<SleepExerciseForm> {
                 const SizedBox(
                   height: 10,
                 ),
-      
+
                 // Description input field
                 CustomTextInputField(
                   label: "Description",
@@ -94,7 +98,7 @@ class _SleepExerciseFormState extends State<SleepExerciseForm> {
                 const SizedBox(
                   height: 10,
                 ),
-      
+
                 // Duration input field
                 CustomTextInputField(
                   label: "Duration",
@@ -113,7 +117,7 @@ class _SleepExerciseFormState extends State<SleepExerciseForm> {
                 const SizedBox(
                   height: 10,
                 ),
-      
+
                 // Audio url input field
                 CustomTextInputField(
                   label: "Audio Url",
@@ -132,25 +136,49 @@ class _SleepExerciseFormState extends State<SleepExerciseForm> {
                 const SizedBox(
                   height: 30,
                 ),
-      
+
                 // Submit button
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     ElevatedButton(
-                      // TODO : save data
-                        onPressed: () {},
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          _formKey.currentState!
+                              .save(); // run all onSaved methods relevant to each form field
+
+                          // form fields value assigning
+                          final sleepExercise = SleepExerciseModel(
+                            category: _category,
+                            name: _name,
+                            description: _description,
+                            duration: _duration,
+                            audioUrl: _audioUrl,
+                          );
+
+                          // clear form fields
+                          _formKey.currentState!.reset();
+                          _category = "";
+                          _name = "";
+                          _description = "";
+                          _duration = 0;
+                          _audioUrl = "";
+
+                          Provider.of<CustomProvider>(context, listen: false).addSleepExercise(sleepExercise, context);
+                        }
+                      },
                       style: const ButtonStyle(
                         backgroundColor:
-                        WidgetStatePropertyAll(AppColors.primaryGreen),
+                            WidgetStatePropertyAll(AppColors.primaryGreen),
                       ),
-                        child: const Padding(
-                          padding: EdgeInsets.all(10.0),
-                          child: Text(
-                            "Submit",
-                            style: TextStyle(fontSize: 18, color: Colors.black),
-                          ),
-                        ),),
+                      child: const Padding(
+                        padding: EdgeInsets.all(10.0),
+                        child: Text(
+                          "Submit",
+                          style: TextStyle(fontSize: 18, color: Colors.black),
+                        ),
+                      ),
+                    ),
                   ],
                 )
               ],

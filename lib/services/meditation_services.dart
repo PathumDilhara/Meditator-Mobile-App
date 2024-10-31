@@ -14,7 +14,7 @@ class MeditationServices {
       MeditationExerciseModel meditation, BuildContext context) async {
     try {
       final dynamic allMeditations = meditationBox
-          .get("meditation_data_box_key"); // if need can use another key
+          .get("meditation_data"); // if need can use another key
 
       // No need but let do
       // empty list to store data as List of Maps of String & dynamic
@@ -31,7 +31,7 @@ class MeditationServices {
 
       meditationList.add(meditation.toJson()); // toJson is in the MeditationExerciseModel
 
-      await meditationBox.put("meditation_data_box_key", meditationList);
+      await meditationBox.put("meditation_data", meditationList);
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -45,7 +45,7 @@ class MeditationServices {
       const SnackBar(
         content: Text("Failed to add a new meditation !"),
         duration: Duration(seconds: 3),
-        backgroundColor: AppColors.primaryBlack,
+        backgroundColor: Colors.redAccent,
       );
     }
   }

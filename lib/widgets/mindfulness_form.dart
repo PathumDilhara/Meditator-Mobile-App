@@ -2,8 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:meditator_mobile_app/models/mindfulness_exercise_model.dart';
+import 'package:meditator_mobile_app/provider/custom_provider.dart';
 import 'package:meditator_mobile_app/utils/colors.dart';
 import 'package:meditator_mobile_app/widgets/reusable/custom_text_input_field.dart';
+import 'package:provider/provider.dart';
 
 class MindfulnessForm extends StatefulWidget {
   const MindfulnessForm({super.key});
@@ -13,7 +16,7 @@ class MindfulnessForm extends StatefulWidget {
 }
 
 class _MindfulnessFormState extends State<MindfulnessForm> {
-  final _formKey = GlobalKey();
+  final _formKey = GlobalKey<FormState>();
 
   String _category = "";
   String _name = "";
@@ -55,6 +58,7 @@ class _MindfulnessFormState extends State<MindfulnessForm> {
             height: 10,
           ),
           Form(
+            key: _formKey,
             child: Column(
               children: [
                 // Displaying picked image
@@ -200,11 +204,36 @@ class _MindfulnessFormState extends State<MindfulnessForm> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               ElevatedButton(
-                // TODO : save data
-                onPressed: () {},
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    _formKey.currentState!.save();
+
+                    final imagePathString = _imagePath?.path ?? "";
+                    final mindfulnessExercise = MindfulnessExerciseModel(
+                      category: _category,
+                      name: _name,
+                      description: _description,
+                      instructions: _instructions,
+                      duration: _duration,
+                      instructionUrl: _instructionsUrl,
+                      imagePath: imagePathString,
+                    );
+
+                    _formKey.currentState!.reset();
+                    _category = "";
+                    _name = "";
+                    _description = "";
+                    _duration = 0;
+                    _instructionsUrl = "";
+                    _imagePath = null;
+
+                    Provider.of<CustomProvider>(context, listen: false)
+                        .addMindfulnessExercise(mindfulnessExercise, context);
+                  }
+                },
                 style: const ButtonStyle(
                   backgroundColor:
-                  WidgetStatePropertyAll(AppColors.primaryGreen),
+                      WidgetStatePropertyAll(AppColors.primaryGreen),
                 ),
                 child: const Padding(
                   padding: EdgeInsets.all(10.0),
