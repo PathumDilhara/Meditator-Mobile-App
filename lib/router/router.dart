@@ -7,6 +7,7 @@ import 'package:meditator_mobile_app/models/functions_page_data_model.dart';
 import 'package:meditator_mobile_app/models/mindfulness_exercise_model.dart';
 import 'package:meditator_mobile_app/models/sleep_exercise_model.dart';
 import 'package:meditator_mobile_app/pages/main_page.dart';
+import 'package:meditator_mobile_app/pages/main_screens/create_custom_exercise_page.dart';
 import 'package:meditator_mobile_app/pages/sub_pages/error_page.dart';
 import 'package:meditator_mobile_app/pages/sub_pages/functions_page.dart';
 import 'package:meditator_mobile_app/pages/sub_pages/mindfulness_exercise_details_page.dart';
@@ -71,9 +72,12 @@ class AppRouter {
         builder: (context, state) {
           // Since we cannot pass dart obj through this convert to json again
           // convert json to dart obj to pass into MindfulnessExerciseTimerPage
-          final mindfulnessExerciseJson = state.uri.queryParameters["mindfulnessExercise"];
-          final mindfulnessExerciseModel = MindfulnessExerciseModel.fromJson(jsonDecode(mindfulnessExerciseJson!));
-          return SingleMindfulnessExercisePage(mindfulnessExerciseModel: mindfulnessExerciseModel);
+          final mindfulnessExerciseJson =
+              state.uri.queryParameters["mindfulnessExercise"];
+          final mindfulnessExerciseModel = MindfulnessExerciseModel.fromJson(
+              jsonDecode(mindfulnessExerciseJson!));
+          return SingleMindfulnessExercisePage(
+              mindfulnessExerciseModel: mindfulnessExerciseModel);
         },
       ),
       GoRoute(
@@ -83,10 +87,18 @@ class AppRouter {
           // Since we cannot pass dart obj through this convert to json again
           // convert json to dart obj to pass into MindfulnessExerciseTimerPage
           final sleepExerciseJson = state.uri.queryParameters["sleepExercise"];
-          final sleepExerciseModel = SleepExerciseModel.fromJson(jsonDecode(sleepExerciseJson!));
+          final sleepExerciseModel =
+              SleepExerciseModel.fromJson(jsonDecode(sleepExerciseJson!));
           return SleepExerciseTimerPage(sleepExerciseModel: sleepExerciseModel);
         },
       ),
+
+      // Create custom exercise page
+      GoRoute(
+        path: "/create",
+        name: "create",
+        builder: (context, state) => const CreateCustomExercisePage(),
+      )
     ],
   );
 }

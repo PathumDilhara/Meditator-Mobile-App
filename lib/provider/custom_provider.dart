@@ -35,7 +35,7 @@ class CustomProvider extends ChangeNotifier {
     }
   }
 
-  // Method to add a new meditation
+  // Method to add a new sleep exercise
   void addSleepExercise(
       SleepExerciseModel sleepExercise, BuildContext context) async {
     try {

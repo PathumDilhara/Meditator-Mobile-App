@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:meditator_mobile_app/widgets/tabs/meditation_tab.dart';
 import 'package:meditator_mobile_app/widgets/tabs/mindfulness_exercise_tab.dart';
 import 'package:meditator_mobile_app/widgets/tabs/sleep_exercise_tab.dart';
@@ -12,22 +13,28 @@ class CustomExercisesPage extends StatelessWidget {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Your exercises"),
-          bottom: TabBar(
+          title: const Text("Your exercises"),
+          bottom: const TabBar(
             tabs: [
               Tab(
                 text: "Meditation",
               ),
               Tab(
-                text: "Sleep Execises",
+                text: "Sleep Exercises",
               ),
               Tab(
-                text: "Mindfullness Exercises",
+                text: "Mindfulness Exercises",
               ),
             ],
           ),
         ),
-        body: TabBarView(
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            GoRouter.of(context).push("/create");
+          },
+          child: const Icon(Icons.add),
+        ),
+        body: const TabBarView(
           children: [
             MeditationTab(),
             SleepExerciseTab(),
